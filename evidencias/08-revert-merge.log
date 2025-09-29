@@ -1,0 +1,7 @@
+* 632bb91 (HEAD -> master) Revert "Merge branch 'add-feature'"
+*   19fda13 Merge branch 'add-feature'
+|\  
+| * 0681000 (add-feature) segundo commit en nueva rama
+| * f2171f3 primer commit en nueva rama
+|/  
+* 30125da initial commit
