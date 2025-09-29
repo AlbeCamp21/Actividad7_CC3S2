@@ -28,7 +28,7 @@
 
 ---
 
-## **Conflictos reales con no-fast-forward**
+### **Conflictos reales con no-fast-forward**
 
 ![evidencias/capturas/eg_04.png](evidencias/capturas/eg_04.png)
 
@@ -41,7 +41,7 @@ Para evitar estos conflictos podría ser una buena opción trabajar en diferente
 
 ---
 
-## **Comparar historiales tras cada método**
+### **Comparar historiales tras cada método**
 
 ![evidencias/capturas/eg_05.png](evidencias/capturas/eg_05.png)
 
@@ -62,3 +62,50 @@ Prefiero `--all` porque permite ver todo el historial y no se pierde detalles de
 Prefiero `--first-parent` ya que simplifica la visualización del historial principal y reduce la confusión con varias ramas activas.
     - Repos con auditoría estricta:  
 Prefiero `--merges` porque resalta las fusiones y facilita la revisión de cuándo y cómo se añadieron cambios de ramas secundarias.
+
+---
+
+### **Revertir una fusión (solo si HEAD es un merge commit)**
+
+![evidencias/capturas/eg_06.png](evidencias/capturas/eg_06.png)
+
+**Preguntas**
+
+- ¿Cuándo usar `git revert` en vez de `git reset`?  
+Se usa `git revert` cuando se quiera deshacer de un cambio pero sin borrar información del historial de commits. Este comando crea un nuevo commit que revierte lo anterior. Por otro lado, `git reset` mueve la rama a un punto anterior y puede borrar los commits.
+
+- ¿Impacto en un repo compartido con historial público?  
+Si se usa `git reset` en un repo compartido, se puede alterar el historial de los demás trabajos y ocasionar conflictos. Ahora, `git revert` es más seguro porque mantiene el historial de commits visible y solamente agrega un commit que revierte los cambios, sin afectar a los demás miembros del equipo.
+
+---
+
+## **Variantes útiles para DevOps/DevSecOps**
+
+#### **A) Fast-Forward Only (merge seguro)**
+
+![evidencias/capturas/eg_07.png](evidencias/capturas/eg_07.png)
+
+#### **B) Rebase + FF (historial lineal con PRs)**
+
+![evidencias/capturas/eg_08.png](evidencias/capturas/eg_08.png)
+
+#### **C) Merge con validación previa (sin commitear)**
+
+![evidencias/capturas/eg_09.png](evidencias/capturas/eg_09.png)
+
+#### **D) Octopus Merge (varias ramas a la vez)**
+
+![evidencias/capturas/eg_10.png](evidencias/capturas/eg_10.png)
+
+#### **E) Subtree (integrar subproyecto conservando gistorial)**
+
+![evidencias/capturas/eg_11.png](evidencias/capturas/eg_11.png)
+
+#### **F) Sesgos y resolución y normalización (algoritmo ORT)**
+
+![evidencias/capturas/eg_12.png](evidencias/capturas/eg_12.png)
+
+En este caso utilicé la opción `git merge -X ours feature-x`.  
+Esta opción consiste que, en caso de conflicto, priorice siempre los cambios de la rama actual e ignore los cambios que vienen de la rama que se está fusionando (`feature-x`).  
+
+Caso contrario con `-X theirs`, que mantiene los cambios de la rama que se está fusionando (`feature-x`).
